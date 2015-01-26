@@ -8,7 +8,7 @@ PicoQuant GmbH - September 2013
 
 The TimeHarp 260 PCIe board is a Time Correlated Single Photon Counting System for applications such as time resolved fluorescence measurement.
 
-The programming library is a DLL with demos for various programming languages. Please refer to the manual (PDF) for instructions.
+The programming library is a DLL with demos for various programming languages. This repository only contains the demo code. For a download link containing the actual library please contact PicoQuant GmbH.
 
 Note that you must purchase the TimeHarp 260 DLL option for this software to work.
 
