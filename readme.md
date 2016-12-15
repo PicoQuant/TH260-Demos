@@ -1,8 +1,12 @@
 #Demo Code for TH260Lib Programming Library for TimeHarp 260
 
+This is demo source code for controlling the TimeHarp 260 TCSPC card
+
 http://www.picoquant.com/products/category/tcspc-and-time-tagging-modules/timeharp-260-tcspc-and-mcs-board-with-pcie-interface
 
 Latest Version of the DLL and TH260 Software is available for here: http://www.picoquant.com/dl_software/TimeHarp260/TimeHarp260_SW_and_DLL_V3_0_0_1.zip
+
+If you are looking for working with ```*.ptu``` and ```*.phu``` files created by PicoQuant software demo code is available here: https://github.com/PicoQuant/PicoQuant-Time-Tagged-File-Format-Demos
 
 Version 3.0.0.1
 PicoQuant GmbH - 2016
