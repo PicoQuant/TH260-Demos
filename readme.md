@@ -1,6 +1,11 @@
 #Demo Code for TH260Lib Programming Library for TimeHarp 260
-Version 1.1
-PicoQuant GmbH - September 2013
+
+http://www.picoquant.com/products/category/tcspc-and-time-tagging-modules/timeharp-260-tcspc-and-mcs-board-with-pcie-interface
+
+Latest Version of the DLL and TH260 Software is available for here: http://www.picoquant.com/dl_software/TimeHarp260/TimeHarp260_SW_and_DLL_V3_0_0_1.zip
+
+Version 3.0.0.1
+PicoQuant GmbH - 2016
 
 ## Disclaimer
 
@@ -15,19 +20,37 @@ The programming library is a DLL with demos for various programming languages. T
 Note that you must purchase the TimeHarp 260 DLL option for this software to work.
 
 
-##What's new in this version
+### What's new in Version 3.0.0.1
 
-The new version 1.1 of TH260Lib provides the following new features:
-  * Compression of overflow records in TTTR mode
-  * A new library routine GetHardwareDebugInfo
-  * A new library routine GetSyncPeriod
-  * A new library routine SetMarkerHoldoffTime replacing SetMarkerHoldoff
-  * A bugfix for SetSyncCFD and SetInputCFD
-  * Some small demo code improvements
-  * A bugfix of the LabVIEW demos
-  * Some documentation fixes
+- Fixes a bug that could lead to the loss of status information
+- Fixes an issue where clipboard data was truncated at long time spans
+- Provides some documentation improvements
+- The file format remains unchanged 
 
-The changes are also marked in red in manual section 7.2 listing the individual library routines. See the notes there for synopsis.
+### What's new in Version 3.0
+
+- Supports the latest hardware improvement of the TimeHarp 260 N - 
+  now running at 250 ps resolution (owners of older models with 
+  1 ns resolution can request a quote for a hardware upgrade to 250 ps) 
+- Officially supports Windows 10 
+- Fixes some minor bugs 
+- The file format remains unchanged 
+
+### What's New in Version 2.0
+ 
+- Some minor bugfixes 
+- A new file format. The idea is to place individual header data items not 
+  in a strict file position and order but to tag the items by name, so that 
+  future additions do not harm existing software. 
+- A new device driver in order to meet new driver signing requirements imposed 
+  by Microsoft. The new driver can now be conveniently installed by setup exe. 
+  Note that Windows versions prior to 7 are no longer supported. If you must 
+  use an older Windows version you can still use the driver of the TimeHarp 
+  260 release version 1.1. 
+- Supports a new hardware feature to change the dead time of the input 
+  channels for suppression of some detector artefacts. Note that this works 
+  only for TimeHarp 260 P purchased after April 2015. Old boards can be 
+  updated but must be returned to PicoQuant for a hardware modification. 
 
 ## Trademark Disclaimer
 
