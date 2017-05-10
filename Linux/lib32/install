@@ -1,0 +1,15 @@
+#!/bin/sh
+
+mkdir -p /usr/local/lib/th260
+cp th260lib.so /usr/local/lib/th260/
+chmod 755 /usr/local/lib/th260/th260lib.so
+cp th260lib.h  /usr/local/lib/th260/
+cp th260defin.h  /usr/local/lib/th260/
+cp errorcodes.h  /usr/local/lib/th260/
+chmod 644 /usr/local/lib/th260/*.h
+
+# the following is a hack for Lazarus that has trouble
+# if the library is not following the naming convention
+# libXXX.so and also does not find the lib at runtime if it
+# is not in the libary search path 
+ln -f /usr/local/lib/th260/th260lib.so /usr/lib/libth260.so

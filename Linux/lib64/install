@@ -1,0 +1,27 @@
+#!/bin/sh
+
+mkdir -p /usr/local/lib64/th260
+cp th260lib.so /usr/local/lib64/th260/
+chmod 755 /usr/local/lib64/th260/th260lib.so
+cp th260lib.h  /usr/local/lib64/th260/
+cp th260defin.h  /usr/local/lib64/th260/
+cp errorcodes.h  /usr/local/lib64/th260/
+chmod 644 /usr/local/lib64/th260/*.h
+
+# the following is a hack for Lazarus that has trouble
+# if the library is not following the naming convention
+# libXXX.so and also does not find the lib at runtime if it
+# is not in the libary search path 
+# Since distributions are not consistent as to where the x64 
+# libdir is, we make a crude check if /usr/lib64 exists 
+
+if [ -d "/usr/lib64" ]
+then
+    echo "Directory /usr/lib64 exists, assuming libdir for x64 is /usr/lib64"
+    ln -f /usr/local/lib64/th260/th260lib.so /usr/lib64/libth260.so
+else
+    echo "Directory /usr/lib64 not found, assuming libdir for x64 is /usr/lib"
+    ln -f /usr/local/lib64/th260/th260lib.so /usr/lib/libth260.so
+fi
+
+
