@@ -1,4 +1,4 @@
-#Demo Code for TH260Lib Programming Library for TimeHarp 260
+# Demo Code for TH260Lib Programming Library for TimeHarp 260
 
 This is demo source code for controlling the TimeHarp 260 TCSPC card
 
@@ -6,7 +6,7 @@ http://www.picoquant.com/products/category/tcspc-and-time-tagging-modules/timeha
 
 Latest Version of the DLL and TH260 Software is available for here: https://www.picoquant.com/dl_software/TimeHarp260/TimeHarp260_SW_and_DLL_V3_1_0_1.zip
 
-Please also refer to the manual: http://www.picoquant.com/dl_manuals/TimeHarp260_DLL_manual.pdf
+Please also refer to the manual: https://www.picoquant.com/dl_manuals/TimeHarp260_DLL_manual.pdf or the manual for Linux: https://www.picoquant.com/dl_manuals/TimeHarp260_DLL_manual_Linux.pdf
 
 If you are looking for working with ```*.ptu``` and ```*.phu``` files created by PicoQuant software demo code is available here: https://github.com/PicoQuant/PicoQuant-Time-Tagged-File-Format-Demos
 
@@ -17,7 +17,7 @@ PicoQuant GmbH - 2017
 
 PicoQuant GmbH disclaims all warranties with regard to this software and associated documentation including all implied warranties of merchantability and fitness. In no case shall PicoQuant GmbH be liable for any direct, indirect or consequential damages or any material or immaterial damages whatsoever resulting from loss of data, time or profits arising from use or performance of this software.
 
-##Introduction
+## Introduction
 
 The TimeHarp 260 PCIe board is a Time Correlated Single Photon Counting System for applications such as time resolved fluorescence measurement.
 
@@ -27,7 +27,7 @@ The programming library is a DLL with demos for various programming languages. P
 
 Note that you must purchase the TimeHarp 260 DLL option for this software to work. This is a one time fee, version upgrades are free.
 
-### What's new in version 3.1.0.1
+## What's new in version 3.1.0.1
 - Supports new hardware models manufactured after February 2017
 - Fixes a buffer alignment issue causing freezes on some recent
   PC mainboard models
@@ -37,14 +37,14 @@ Note that you must purchase the TimeHarp 260 DLL option for this software to wor
 - For best throughput observe new buffer alignment recommendation
 
 
-### What's new in Version 3.0.0.1
+## What's new in Version 3.0.0.1
 
 - Fixes a bug that could lead to the loss of status information
 - Fixes an issue where clipboard data was truncated at long time spans
 - Provides some documentation improvements
 - The file format remains unchanged
 
-### What's new in Version 3.0
+## What's new in Version 3.0
 
 - Supports the latest hardware improvement of the TimeHarp 260 N -
   now running at 250 ps resolution (owners of older models with
@@ -53,7 +53,7 @@ Note that you must purchase the TimeHarp 260 DLL option for this software to wor
 - Fixes some minor bugs
 - The file format remains unchanged
 
-### What's New in Version 2.0
+## What's New in Version 2.0
 
 - Some minor bugfixes
 - A new file format. The idea is to place individual header data items not
