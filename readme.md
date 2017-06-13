@@ -6,7 +6,7 @@ http://www.picoquant.com/products/category/tcspc-and-time-tagging-modules/timeha
 
 Latest Version of the DLL and TH260 Software is available for here: https://www.picoquant.com/dl_software/TimeHarp260/TimeHarp260_SW_and_DLL_V3_1_0_2.zip
 
-Please also refer to the manual: https://www.picoquant.com/dl_manuals/TimeHarp260_DLL_manual.pdf or the manual for Linux: https://www.picoquant.com/dl_manuals/TimeHarp260_DLL_manual_Linux.pdf
+Please also refer to the manual: https://www.picoquant.com/dl_manuals/TimeHarp260_DLL_manual.pdf or the manual for Linux: https://www.picoquant.com/dl_manuals/TimeHarp260_DLL_Linux_manual_v3.1.0.2.pdf
 
 If you are looking for working with ```*.ptu``` and ```*.phu``` files created by PicoQuant software demo code is available here: https://github.com/PicoQuant/PicoQuant-Time-Tagged-File-Format-Demos
 
