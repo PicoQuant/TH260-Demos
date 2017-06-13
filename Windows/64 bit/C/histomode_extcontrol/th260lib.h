@@ -1,6 +1,6 @@
 /* Functions exported by the TimeHarp 260 programming library TH260Lib
 	
-	Ver. 3.1.0.1     PicoQuant GmbH, March 2017
+	Ver. 3.1.0.2     PicoQuant GmbH, May 2017
 */
 
 #ifndef _WIN32

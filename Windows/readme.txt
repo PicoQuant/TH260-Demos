@@ -1,6 +1,6 @@
 TH260Lib Programming Library for TimeHarp 260 
-Version 3.1.0.1
-PicoQuant GmbH - March 2017
+Version 3.1.0.2
+PicoQuant GmbH - May 2017
 
 
 
@@ -20,7 +20,14 @@ Note that you must purchase the TimeHarp 260 DLL option for this
 software to work. This is a one time fee, version upgrades are free.
 
 
-What's new in version 3.1.0.1
+What's new in version 3.1.0.2
+
+- Fixes an issue with stopping measurements on some PCs 
+- Improves histogramming throughput while reducing CPU load 
+- The API and data structures remain unchanged
+
+
+What was new in version 3.1.0.1
 
 - Supports new hardware models manufactured after February 2017
 - Fixes a buffer alignment issue causing freezes on some recent 
@@ -129,7 +136,7 @@ Contact and Support
 PicoQuant GmbH
 Rudower Chaussee 29
 12489 Berlin, Germany
-Phone +49 30 6392 6929
-Fax   +49 30 6392 6561
+Phone +49 30 1208820-0
+Fax   +49 30 1208820-90
 email info@picoquant.com
 www http://www.picoquant.com

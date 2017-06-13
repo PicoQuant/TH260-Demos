@@ -1,7 +1,7 @@
 /* 	
 	TH260Lib programming library for TimeHarp 260
 	
-	Ver. 3.1.0.1      PicoQuant GmbH, March 2017
+	Ver. 3.1.0.2      PicoQuant GmbH, May 2017
 */
 
 #define TH260_ERROR_NONE						   0 
