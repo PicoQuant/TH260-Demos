@@ -4,14 +4,14 @@ This is demo source code for controlling the TimeHarp 260 TCSPC card
 
 http://www.picoquant.com/products/category/tcspc-and-time-tagging-modules/timeharp-260-tcspc-and-mcs-board-with-pcie-interface
 
-Latest Version of the DLL and TH260 Software is available for here: https://www.picoquant.com/dl_software/TimeHarp260/TimeHarp260_SW_and_DLL_V3_1_0_2.zip
+Latest Version of the DLL and TH260 Software is available for here: https://www.picoquant.com/dl_software/TimeHarp260/TimeHarp260_SW_and_DLL_V3_1_0_3.zip
 
-Please also refer to the manual: https://www.picoquant.com/dl_manuals/TimeHarp260_DLL_manual.pdf or the manual for Linux: https://www.picoquant.com/dl_manuals/TimeHarp260_DLL_Linux_manual_v3.1.0.2.pdf
+Please also refer to the manual: https://www.picoquant.com/dl_manuals/TimeHarp260_DLL_manual_v3.1.0.2.pdf or the manual for Linux: https://www.picoquant.com/dl_manuals/TimeHarp260_DLL_manual_Linux_v3.1.0.2.pdf
 
 If you are looking for working with ```*.ptu``` and ```*.phu``` files created by PicoQuant software demo code is available here: https://github.com/PicoQuant/PicoQuant-Time-Tagged-File-Format-Demos
 
-Version 3.1.0.2
-PicoQuant GmbH - 2017
+Version 3.1.0.3
+PicoQuant GmbH - 2018
 
 ## Disclaimer
 
@@ -26,6 +26,14 @@ The system requires at least a dual core computer with at least 1 GB of memory a
 The programming library is a DLL with demos for various programming languages. Please refer to the manual (PDF) for instructions.
 
 Note that you must purchase the TimeHarp 260 DLL option for this software to work. This is a one time fee, version upgrades are free.
+
+## What's new in Version 3.1.0.3
+
+- Fixes an issue with sporadic timeout errors upon hardware initialization
+- Fixes an issue where errors occurred when Windows was set to 1 or 2 ms
+  timer resolution
+- Provides a new driver to support Windows 10 with "secure boot" enabled
+- The file format remains unchanged
 
 ## What's new in version 3.1.0.2
 - Fixes an issue with stopping measurements on some PCs
