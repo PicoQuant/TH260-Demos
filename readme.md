@@ -1,10 +1,8 @@
 
-# Demo Code for TH260Lib Programming Library for TimeHarp 260
-
 **currently un-maintained  Please contact support@picoquant.com for up-to-date versiuons and information**
 
 
-
+# Demo Code for TH260Lib Programming Library for TimeHarp 260
 
 
 This is demo source code for controlling the TimeHarp 260 TCSPC card
