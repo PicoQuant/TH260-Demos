@@ -1,5 +1,5 @@
 
-**currently un-maintained  Please contact support@picoquant.com for up-to-date versiuons and information**
+**currently un-maintained  Please contact support@picoquant.com for up-to-date versions and information**
 
 
 # Demo Code for TH260Lib Programming Library for TimeHarp 260
