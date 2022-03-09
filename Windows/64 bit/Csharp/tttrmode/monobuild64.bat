@@ -1,2 +1,2 @@
-gmcs -define:x64 tttrmode.cs
+mcs -define:x64 tttrmode.cs
 

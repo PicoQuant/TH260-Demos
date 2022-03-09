@@ -2,19 +2,31 @@ Unit TH260Lib;
 {                                                                     }
 { Functions exported by the TimeHarp 260 programming library TH260Lib }
 {                                                                     }
-{ Ver. 3.1.0.2      May 2017                                          }
+{ Ver. 3.2       February 2020                                        }
 {                                                                     }
 
 interface
 
 const
-  {$IFDEF WIN64}
-    TH260_LIB_NAME = 'TH260Lib64.DLL';
-  {$ELSE}
-    TH260_LIB_NAME = 'TH260Lib.DLL';
-  {$ENDIF}
 
-  LIB_VERSION    =      '3.1';
+{$UNDEF PLATFORM_OK}
+{$IFDEF WIN32}
+  TH260_LIB_NAME       =      'th260lib.dll';  // Windows 32 bit
+  {$DEFINE PLATFORM_OK}
+{$ENDIF}
+{$IFDEF WIN64}
+  TH260_LIB_NAME       =      'th260lib64.dll';    // Windows 64 bit
+  {$DEFINE PLATFORM_OK}
+{$ENDIF}
+{$IFDEF LINUX}
+  TH260_LIB_NAME       =      'libth260.so';  // Linux
+  {$DEFINE PLATFORM_OK}
+{$ENDIF}
+{$IFNDEF PLATFORM_OK}
+  {$FATAL OS platform not supported}
+{$ENDIF}
+
+  LIB_VERSION    =      '3.2';
 
   MAXDEVNUM      =          4;   // max num of devices
   HHMAXINPCHAN   =          2;   // max num of input channels

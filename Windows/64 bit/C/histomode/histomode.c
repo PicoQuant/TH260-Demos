@@ -1,12 +1,12 @@
 /************************************************************************
 
-  Demo access to TimeHarp 260 Hardware via TH260LIB v 3.1
+  Demo access to TimeHarp 260 Hardware via TH260LIB v 3.2
   The program performs a measurement based on hardcoded settings.
   The resulting histogram is stored in an ASCII output file.
 
-  Michael Wahl, PicoQuant GmbH, March 2017
+  Michael Wahl, PicoQuant GmbH, February 2020
 
-  Note: This is a console application (i.e. run in Windows cmd box)
+  Note: This is a console application
 
   Note: At the API level channel numbers are indexed 0..N-1 
 		where N is the number of channels the device has.
@@ -14,17 +14,24 @@
   
   Tested with the following compilers:
 
-  - MinGW 2.0.0-3 (free compiler for Win 32 bit)
+  - MinGW 2.0.0-3 (Win 32 bit)
   - MS Visual C++ 6.0 (Win 32 bit)
-  - MS Visual Studio 2010 (Win 64 bit)
+  - MS Visual Studio 2010 (Win 32/64 bit)
   - Borland C++ 5.3 (Win 32 bit)
+  - gcc 4.8.1 (Linux 32/64 bit)
 
 ************************************************************************/
 
+#ifdef _WIN32
 #include <windows.h>
 #include <dos.h>
-#include <stdio.h>
 #include <conio.h>
+#else
+#include <unistd.h>
+#define Sleep(msec) usleep(msec*1000)
+#endif
+
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -80,7 +87,7 @@ int main(int argc, char* argv[])
  char cmd=0;
 
 
- printf("\nTimeHarp 260 TH260Lib Demo Application    M. Wahl, PicoQuant GmbH, 2017");
+ printf("\nTimeHarp 260 TH260Lib Demo Application    M. Wahl, PicoQuant GmbH, 2020");
  printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
  TH260_GetLibraryVersion(LIB_Version);
  printf("\nLibrary version is %s",LIB_Version);
@@ -102,18 +109,18 @@ int main(int argc, char* argv[])
 	retcode = TH260_OpenDevice(i, HW_Serial); 
 	if(retcode==0) //Grab any device we can open
 	{
-		printf("\n  %1d        %7s    open ok", i, HW_Serial);
+		printf("\n  %d        %7s    open ok", i, HW_Serial);
 		dev[found]=i; //keep index to devices we want to use
 		found++;
 	}
 	else
 	{
 		if(retcode==TH260_ERROR_DEVICE_OPEN_FAIL)
-			printf("\n  %1d        %7s    no device", i, HW_Serial);
+			printf("\n  %d        %7s    no device", i, HW_Serial);
 		else 
 		{
 			TH260_GetErrorString(Errorstring, retcode);
-			printf("\n  %1d        %7s    %s", i, HW_Serial, Errorstring);
+			printf("\n  %d        %7s    %s", i, HW_Serial, Errorstring);
 		}
 	}
  }
@@ -128,12 +135,12 @@ int main(int argc, char* argv[])
 	printf("\nNo device available.");
 	goto ex; 
  }
- printf("\nUsing device #%1d",dev[0]);
+ printf("\nUsing device #%d",dev[0]);
 
- fprintf(fpout,"Binning           : %ld\n",Binning);
- fprintf(fpout,"Offset            : %ld\n",Offset);
- fprintf(fpout,"AcquisitionTime   : %ld\n",Tacq);
- fprintf(fpout,"SyncDivider       : %ld\n",SyncDivider);
+ fprintf(fpout,"Binning           : %d\n",Binning);
+ fprintf(fpout,"Offset            : %d\n",Offset);
+ fprintf(fpout,"AcquisitionTime   : %d\n",Tacq);
+ fprintf(fpout,"SyncDivider       : %d\n",SyncDivider);
 
  printf("\nInitializing the device...");
 
@@ -158,17 +165,17 @@ int main(int argc, char* argv[])
 
  if(strcmp(HW_Model,"TimeHarp 260 P")==0)
  {
-	 fprintf(fpout,"SyncCFDZeroCross  : %ld\n",SyncCFDZeroCross);
-	 fprintf(fpout,"SyncCFDLevel      : %ld\n",SyncCFDLevel);
-	 fprintf(fpout,"InputCFDZeroCross : %ld\n",InputCFDZeroCross);
-	 fprintf(fpout,"InputCFDLevel     : %ld\n",InputCFDLevel);
+	 fprintf(fpout,"SyncCFDZeroCross  : %d\n",SyncCFDZeroCross);
+	 fprintf(fpout,"SyncCFDLevel      : %d\n",SyncCFDLevel);
+	 fprintf(fpout,"InputCFDZeroCross : %d\n",InputCFDZeroCross);
+	 fprintf(fpout,"InputCFDLevel     : %d\n",InputCFDLevel);
  }
  else if(strcmp(HW_Model,"TimeHarp 260 N")==0)
  {
-	 fprintf(fpout,"SyncTiggerEdge    : %ld\n",SyncTiggerEdge);
-	 fprintf(fpout,"SyncTriggerLevel  : %ld\n",SyncTriggerLevel);
-	 fprintf(fpout,"InputTriggerEdge  : %ld\n",InputTriggerEdge);
-	 fprintf(fpout,"InputTriggerLevel : %ld\n",InputTriggerLevel);
+	 fprintf(fpout,"SyncTiggerEdge    : %d\n",SyncTiggerEdge);
+	 fprintf(fpout,"SyncTriggerLevel  : %d\n",SyncTriggerLevel);
+	 fprintf(fpout,"InputTriggerEdge  : %d\n",InputTriggerEdge);
+	 fprintf(fpout,"InputTriggerLevel : %d\n",InputTriggerLevel);
  }
  else
  {
@@ -348,6 +355,7 @@ int main(int argc, char* argv[])
         goto ex;
  }
 
+ 
  while(cmd!='q')
  { 
 
@@ -369,7 +377,7 @@ int main(int argc, char* argv[])
           printf("\nTH260_GetSyncRate error %d (%s). Aborted.\n",retcode,Errorstring);
           goto ex;
 		}
-        printf("\nSyncrate=%1d/s", Syncrate);
+        printf("\nSyncrate=%d/s", Syncrate);
 
         for(i=0;i<NumChannels;i++) // for all channels
 		{
@@ -380,7 +388,7 @@ int main(int argc, char* argv[])
 			printf("\nTH260_GetCountRate error %d (%s). Aborted.\n",retcode,Errorstring);
 			goto ex;
 		  }
-	      printf("\nCountrate[%1d]=%1d/s", i, Countrate);
+	      printf("\nCountrate[%d]=%d/s", i, Countrate);
 		}
 
 		//here you could check for warnings again
@@ -393,7 +401,7 @@ int main(int argc, char* argv[])
                 goto ex;
         }
          
-        printf("\n\nMeasuring for %1d milliseconds...",Tacq);
+        printf("\n\nMeasuring for %d milliseconds...",Tacq);
         
 		ctcstatus=0;
 		while(ctcstatus==0)

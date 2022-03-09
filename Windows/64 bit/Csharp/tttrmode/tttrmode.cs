@@ -1,12 +1,12 @@
 
 /************************************************************************
 
-  C# demo access to TimeHarp 260 Hardware via TH260LIB v 3.1.
+  C# demo access to TimeHarp 260 Hardware via TH260LIB v 3.2.
   The program performs a measurement based on hardcoded settings.
 
   The resulting event data is stored in a binary output file.
 
-  Michael Wahl, PicoQuant GmbH, March 2017
+  Michael Wahl, PicoQuant GmbH, February 2020
 
   Note: This is a console application (i.e. run in Windows cmd box)
 
@@ -52,7 +52,7 @@ class TTTRMode
 #endif
 
 
-    const string TargetLibVersion ="3.1"; //this is what this program was written for
+    const string TargetLibVersion ="3.2"; //this is what this program was written for
 
 
 
@@ -205,7 +205,7 @@ class TTTRMode
     		BinaryWriter bw = null;
 
 
-		Console.WriteLine ("TimeHarp 260     TH260Lib Demo Application    M. Wahl, PicoQuant GmbH, 2017");
+		Console.WriteLine ("TimeHarp 260     TH260Lib Demo Application    M. Wahl, PicoQuant GmbH, 2020");
 		Console.WriteLine ("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 

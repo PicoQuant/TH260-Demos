@@ -1,15 +1,15 @@
 
 
-% Demo for access to TimeHarp 260 Hardware via TH260LIB.DLL v 3.1.
+% Demo for access to TimeHarp 260 Hardware via TH260LIB.DLL v 3.2.
 % The program performs a TTTR measurement based on hardcoded settings.
 % The resulting data stream is stored in a binary output file.
 %
-% Michael Wahl, PicoQuant, February 2017
+% Michael Wahl, PicoQuant, February 2020
 
 
 % Constants from hhdefin.h
 
-REQLIBVER   =     '3.1';     % this is the version this program expects
+REQLIBVER   =     '3.2';     % this is the version this program expects
 MAXDEVNUM   =         4;
 TTREADMAX   =    131072;     % 128K event records 
 MODE_HIST   =         0;
@@ -44,7 +44,7 @@ InputTriggerEdge  =0;     %  you can change this
 InputTriggerLevel =-50;   %  you can change this
  
       
-fprintf('\nTimeHarp 260 TH260Lib Demo Application             PicoQuant 2017\n');
+fprintf('\nTimeHarp 260 TH260Lib Demo Application             PicoQuant 2020\n');
 
 if (~libisloaded('TH260lib'))    
     %Attention: The header file name given below is case sensitive and must

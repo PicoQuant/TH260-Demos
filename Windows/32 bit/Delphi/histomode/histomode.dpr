@@ -1,22 +1,24 @@
 {
-  TimeHarp 260  TH260LIB v.3.1 - Usage Demo with Delphi or Lazarus.
-  Tested with Lazarus 1.2.4 and Delphi 10.1 on Windows 8.
+  TimeHarp 260  TH260LIB v.3.2 - Usage Demo with Delphi or Lazarus.
+  Tested with Lazarus 1.8.4 and Delphi 10.1 on Windows 8
+  and with Lazarus 1.4.4 on Linux
 
-  Demo access to TimeHarp 260 Hardware via TH260LIB.DLL.
+  Demo access to TimeHarp 260 Hardware via TH260LIB.
   The program performs a histogram measurement based on hardcoded settings.
   The resulting histogram is stored in an ASCII output file.
 
-  Michael Wahl, Andreas Podubrin, PicoQuant GmbH, March 2017
+  Michael Wahl, Andreas Podubrin, PicoQuant GmbH, February 2020
 
-  Note: This is a console application (i.e. run in Windows cmd box)
+  Note: This is a console application
 
   Note: At the API level channel numbers are indexed 0..N-1
         where N is the number of channels the device has.
 }
 
 program histomode;
-
+{$ifdef MSWINDOWS}
 {$APPTYPE CONSOLE}
+{$endif}
 
 uses
   {$ifdef fpc}
@@ -90,7 +92,7 @@ var
 
 begin
   writeln;
-  writeln ('TimeHarp 260 TH260Lib    Usage Demo                 PicoQuant GmbH, 2017');
+  writeln ('TimeHarp 260 TH260Lib        Usage Demo             PicoQuant GmbH, 2020');
   writeln ('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
   iRetCode := TH260_GetLibraryVersion (pcLibVersion);
   if iRetCode <> TH260_ERROR_NONE

@@ -1,26 +1,27 @@
 /************************************************************************
 
-  Demo access to TimeHarp 260 Hardware via TH260LIB v.3.1
+  Demo access to TimeHarp 260 Hardware via TH260LIB v 3.2
   The program performs a measurement based on hardcoded settings.
   The resulting event data is stored in a binary output file.
 
-  Michael Wahl, PicoQuant GmbH, March 2017
+  Michael Wahl, PicoQuant GmbH, February 2020
 
-  Note: This is a console application (i.e. run in Windows cmd box)
+  Note: This is a console application
 
   Note: At the API level the input channel numbers are indexed 0..N-1 
-		where N is the number of input channels the device has.
+        where N is the number of input channels the device has.
 
   Note: This demo writes only raw event data to the output file.
-		It does not write a file header as regular .ht* files have it. 
+        It does not write a file header as regular .PTU files have it. 
 
 
   Tested with the following compilers:
 
   - MinGW 2.0.0-3 (free compiler for Win 32 bit)
   - MS Visual C++ 6.0 (Win 32 bit)
-  - MS Visual Studio 2010 (Win 64 bit)
+  - MS Visual Studio 2010 (Win 32/64 bit)
   - Borland C++ 5.3 (Win 32 bit)
+  - gcc 4.8.1 (Linux 32/64 bit)  
 
 ************************************************************************/
 
@@ -90,8 +91,8 @@ int main(int argc, char* argv[])
  unsigned int Progress;
 
 
- printf("\nTimeHarp 260 TH260Lib.DLL Demo Application   M. Wahl, PicoQuant GmbH, 2017");
- printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+ printf("\nTimeHarp 260 TH260Lib Demo Application    M. Wahl, PicoQuant GmbH, 2020");
+ printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
  TH260_GetLibraryVersion(LIB_Version);
  printf("\nLibrary version is %s\n",LIB_Version);
  if(strncmp(LIB_Version,LIB_VERSION,sizeof(LIB_VERSION))!=0)
@@ -113,18 +114,18 @@ int main(int argc, char* argv[])
 	retcode = TH260_OpenDevice(i, HW_Serial); 
 	if(retcode==0) //Grab any device we can open
 	{
-		printf("\n  %1d        %7s    open ok", i, HW_Serial);
+		printf("\n  %d        %7s    open ok", i, HW_Serial);
 		dev[found]=i; //keep index to devices we want to use
 		found++;
 	}
 	else
 	{
 		if(retcode==TH260_ERROR_DEVICE_OPEN_FAIL)
-			printf("\n  %1d        %7s    no device", i, HW_Serial);
+			printf("\n  %d        %7s    no device", i, HW_Serial);
 		else 
 		{
 			TH260_GetErrorString(Errorstring, retcode);
-			printf("\n  %1d        %7s    %s", i, HW_Serial, Errorstring);
+			printf("\n  %d        %7s    %s", i, HW_Serial, Errorstring);
 		}
 	}
  }
@@ -139,7 +140,7 @@ int main(int argc, char* argv[])
 	printf("\nNo device available.");
 	goto ex; 
  }
- printf("\nUsing device #%1d",dev[0]);
+ printf("\nUsing device #%d",dev[0]);
  printf("\nInitializing the device...");
 
 
@@ -176,25 +177,25 @@ int main(int argc, char* argv[])
 
  printf("\n\nUsing the following settings:\n");
 
- printf("Mode              : %ld\n",Mode);
- printf("Binning           : %ld\n",Binning);
- printf("Offset            : %ld\n",Offset);
- printf("AcquisitionTime   : %ld\n",Tacq);
- printf("SyncDivider       : %ld\n",SyncDivider);
+ printf("Mode              : %d\n",Mode);
+ printf("Binning           : %d\n",Binning);
+ printf("Offset            : %d\n",Offset);
+ printf("AcquisitionTime   : %d\n",Tacq);
+ printf("SyncDivider       : %d\n",SyncDivider);
 
  if(strcmp(HW_Model,"TimeHarp 260 P")==0)
  {
-	 printf("SyncCFDZeroCross  : %ld\n",SyncCFDZeroCross);
-	 printf("SyncCFDLevel      : %ld\n",SyncCFDLevel);
-	 printf("InputCFDZeroCross : %ld\n",InputCFDZeroCross);
-	 printf("InputCFDLevel     : %ld\n",InputCFDLevel);
+	 printf("SyncCFDZeroCross  : %d\n",SyncCFDZeroCross);
+	 printf("SyncCFDLevel      : %d\n",SyncCFDLevel);
+	 printf("InputCFDZeroCross : %d\n",InputCFDZeroCross);
+	 printf("InputCFDLevel     : %d\n",InputCFDLevel);
  }
  else if(strcmp(HW_Model,"TimeHarp 260 N")==0)
  {
-	 printf("SyncTiggerEdge    : %ld\n",SyncTiggerEdge);
-	 printf("SyncTriggerLevel  : %ld\n",SyncTriggerLevel);
-	 printf("InputTriggerEdge  : %ld\n",InputTriggerEdge);
-	 printf("InputTriggerLevel : %ld\n",InputTriggerLevel);
+	 printf("SyncTiggerEdge    : %d\n",SyncTiggerEdge);
+	 printf("SyncTriggerLevel  : %d\n",SyncTriggerLevel);
+	 printf("InputTriggerEdge  : %d\n",InputTriggerEdge);
+	 printf("InputTriggerLevel : %d\n",InputTriggerLevel);
  }
  else
  {
@@ -396,6 +397,7 @@ int main(int argc, char* argv[])
 			}               
 				Progress += nRecords;
 				printf("\b\b\b\b\b\b\b\b\b\b\b\b%12u",Progress);
+				fflush(stdout);
 		}
 		else
 		{

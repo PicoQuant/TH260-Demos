@@ -1,1 +1,1 @@
-gmcs -platform:x86 histomode.cs
+mcs -platform:x86 histomode.cs

@@ -1,6 +1,6 @@
-/* Functions exported by the TimeHarp 260 programming library TH260Lib
-	
-	Ver. 3.1.0.1     PicoQuant GmbH, March 2017
+/* 
+    Functions exported by the TimeHarp 260 programming library TH260Lib 
+    Ver. 3.2.0.0     PicoQuant GmbH, February 2020
 */
 
 #ifndef _WIN32
@@ -31,10 +31,10 @@ extern int _stdcall TH260_SetInputCFD(int devidx, int channel, int level, int zc
 extern int _stdcall TH260_SetInputEdgeTrg(int devidx, int channel, int level, int edge); //TH 260 Nano only 
 extern int _stdcall TH260_SetInputChannelOffset(int devidx, int channel, int value);
 extern int _stdcall TH260_SetInputChannelEnable(int devidx, int channel, int enable);
-extern int _stdcall TH260_SetInputDeadTime(int devidx, int channel, int tdcode); //needs TH 260 Pico >= April 2015 
+extern int _stdcall TH260_SetInputDeadTime(int devidx, int channel, int tdcode);   //needs TH 260 Pico >= April 2015 
 
-extern int _stdcall TH260_SetTimingMode(int devidx, int mode); //TH 260 Pico only 
-extern int _stdcall TH260_SetStopOverflow(int devidx, int stop_ovfl, unsigned int stopcount);	
+extern int _stdcall TH260_SetTimingMode(int devidx, int mode);   //TH 260 Pico only 
+extern int _stdcall TH260_SetStopOverflow(int devidx, int stop_ovfl, unsigned int stopcount);   
 extern int _stdcall TH260_SetBinning(int devidx, int binning);
 extern int _stdcall TH260_SetOffset(int devidx, int offset);
 extern int _stdcall TH260_SetHistoLen(int devidx, int lencode, int* actuallen); 

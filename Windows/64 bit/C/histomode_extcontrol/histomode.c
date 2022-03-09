@@ -3,13 +3,13 @@
   THSI IS AN ADVANCED DEMO. DO NOT USE FOR YOUR FIRST EXPERIMENTS.
   Look at the variable meascontrol down below to see what it does.
 
-  Demo access to TimeHarp 260 Hardware via TH260LIB v 3.1
+  Demo access to TimeHarp 260 Hardware via TH260LIB v 3.2
   The program performs a measurement based on hardcoded settings.
   The resulting histogram is stored in an ASCII output file.
 
-  Michael Wahl, PicoQuant GmbH, March 2017
+  Michael Wahl, PicoQuant GmbH, February 2020
 
-  Note: This is a console application (i.e. run in Windows cmd box)
+  Note: This is a console application
 
   Note: At the API level channel numbers are indexed 0..N-1 
 		where N is the number of channels the device has.
@@ -17,17 +17,26 @@
   
   Tested with the following compilers:
 
-  - MinGW 2.0.0-3 (free compiler for Win 32 bit)
+  - MinGW 2.0.0-3 (Win 32 bit)
   - MS Visual C++ 6.0 (Win 32 bit)
-  - MS Visual Studio 2010 (Win 64 bit)
+  - MS Visual Studio 2010 (Win 32/64 bit)
   - Borland C++ 5.3 (Win 32 bit)
+  - gcc 4.8.1 (Linux 32/64 bit)
 
 ************************************************************************/
 
+
+#ifdef _WIN32
 #include <windows.h>
 #include <dos.h>
-#include <stdio.h>
+
 #include <conio.h>
+#else
+#include <unistd.h>
+#define Sleep(msec) usleep(msec*1000)
+#endif
+
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -92,7 +101,7 @@ int main(int argc, char* argv[])
  char cmd=0;
 
 
- printf("\nTimeHarp 260 TH260Lib Demo Application    M. Wahl, PicoQuant GmbH, 2017");
+ printf("\nTimeHarp 260 TH260Lib Demo Application    M. Wahl, PicoQuant GmbH, 2020");
  printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
  TH260_GetLibraryVersion(LIB_Version);
  printf("\nLibrary version is %s",LIB_Version);
@@ -141,24 +150,26 @@ int main(int argc, char* argv[])
  }
  printf("\nUsing device #%1d",dev[0]);
 
- fprintf(fpout,"Binning           : %ld\n",Binning);
- fprintf(fpout,"Offset            : %ld\n",Offset);
- fprintf(fpout,"AcquisitionTime   : %ld\n",Tacq);
- fprintf(fpout,"SyncDivider       : %ld\n",SyncDivider);
+ fprintf(fpout,"Binning           : %d\n",Binning);
+ fprintf(fpout,"Offset            : %d\n",Offset);
+ fprintf(fpout,"AcquisitionTime   : %d\n",Tacq);
+ fprintf(fpout,"SyncDivider       : %d\n",SyncDivider);
 
  printf("\nInitializing the device...");
 
  retcode = TH260_Initialize(dev[0],MODE_HIST);  //Histo mode with internal clock
  if(retcode<0)
  {
-        printf("\nTH260_Initialize error %d. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_Initialize error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
 
  retcode = TH260_GetHardwareInfo(dev[0],HW_Model,HW_Partno,HW_Version); 
  if(retcode<0)
  {
-        printf("\nTH260_GetHardwareInfo error %d. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_GetHardwareInfo error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
  else
@@ -167,17 +178,17 @@ int main(int argc, char* argv[])
 
  if(strcmp(HW_Model,"TimeHarp 260 P")==0)
  {
-	 fprintf(fpout,"SyncCFDZeroCross  : %ld\n",SyncCFDZeroCross);
-	 fprintf(fpout,"SyncCFDLevel      : %ld\n",SyncCFDLevel);
-	 fprintf(fpout,"InputCFDZeroCross : %ld\n",InputCFDZeroCross);
-	 fprintf(fpout,"InputCFDLevel     : %ld\n",InputCFDLevel);
+	 fprintf(fpout,"SyncCFDZeroCross  : %d\n",SyncCFDZeroCross);
+	 fprintf(fpout,"SyncCFDLevel      : %d\n",SyncCFDLevel);
+	 fprintf(fpout,"InputCFDZeroCross : %d\n",InputCFDZeroCross);
+	 fprintf(fpout,"InputCFDLevel     : %d\n",InputCFDLevel);
  }
  else if(strcmp(HW_Model,"TimeHarp 260 N")==0)
  {
-	 fprintf(fpout,"SyncTiggerEdge    : %ld\n",SyncTiggerEdge);
-	 fprintf(fpout,"SyncTriggerLevel  : %ld\n",SyncTriggerLevel);
-	 fprintf(fpout,"InputTriggerEdge  : %ld\n",InputTriggerEdge);
-	 fprintf(fpout,"InputTriggerLevel : %ld\n",InputTriggerLevel);
+	 fprintf(fpout,"SyncTiggerEdge    : %d\n",SyncTiggerEdge);
+	 fprintf(fpout,"SyncTriggerLevel  : %d\n",SyncTriggerLevel);
+	 fprintf(fpout,"InputTriggerEdge  : %d\n",InputTriggerEdge);
+	 fprintf(fpout,"InputTriggerLevel : %d\n",InputTriggerLevel);
  }
  else
  {
@@ -189,7 +200,8 @@ int main(int argc, char* argv[])
  retcode = TH260_GetNumOfInputChannels(dev[0],&NumChannels); 
  if(retcode<0)
  {
-        printf("\nTH260_GetNumOfInputChannels error %d. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_GetNumOfInputChannels error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
  else
@@ -199,7 +211,8 @@ int main(int argc, char* argv[])
  retcode = TH260_SetSyncDiv(dev[0],SyncDivider);
  if(retcode<0)
  {
-        printf("\nPH_SetSyncDiv error %ld. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nPH_SetSyncDiv error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
 
@@ -208,7 +221,8 @@ int main(int argc, char* argv[])
 	 retcode=TH260_SetSyncCFD(dev[0],SyncCFDLevel,SyncCFDZeroCross);
 	 if(retcode<0)
 	 {
-			printf("\nTH260_SetSyncCFD error %ld. Aborted.\n",retcode);
+			TH260_GetErrorString(Errorstring, retcode);
+			printf("\nTH260_SetSyncCFD error %d (%s). Aborted.\n",retcode,Errorstring);
 			goto ex;
 	 }
 
@@ -217,7 +231,8 @@ int main(int argc, char* argv[])
 		 retcode=TH260_SetInputCFD(dev[0],i,InputCFDLevel,InputCFDZeroCross);
 		 if(retcode<0)
 		 {
-				printf("\nTH260_SetInputCFD error %ld. Aborted.\n",retcode);
+				TH260_GetErrorString(Errorstring, retcode);
+				printf("\nTH260_SetInputCFD error %d (%s). Aborted.\n",retcode,Errorstring);
 				goto ex;
 		 }
 	 }
@@ -228,7 +243,8 @@ int main(int argc, char* argv[])
 	 retcode=TH260_SetSyncEdgeTrg(dev[0],SyncTriggerLevel,SyncTiggerEdge);
 	 if(retcode<0)
 	 {
-			printf("\nTH260_SetSyncEdgeTrg error %ld. Aborted.\n",retcode);
+			TH260_GetErrorString(Errorstring, retcode);
+			printf("\nTH260_SetSyncEdgeTrg error %d (%s). Aborted.\n",retcode,Errorstring);
 			goto ex;
 	 }
 
@@ -237,7 +253,8 @@ int main(int argc, char* argv[])
 		 retcode=TH260_SetInputEdgeTrg(dev[0],i,InputTriggerLevel,InputTriggerEdge);
 		 if(retcode<0)
 		 {
-				printf("\nTH260_SetInputEdgeTrg error %ld. Aborted.\n",retcode);
+				TH260_GetErrorString(Errorstring, retcode);
+				printf("\nTH260_SetInputEdgeTrg error %d (%s). Aborted.\n",retcode,Errorstring);
 				goto ex;
 		 }
 	 }
@@ -246,7 +263,8 @@ int main(int argc, char* argv[])
  retcode = TH260_SetSyncChannelOffset(dev[0],0);
  if(retcode<0)
  {
-        printf("\nTH260_SetSyncChannelOffset error %ld. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_SetSyncChannelOffset error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
 
@@ -255,7 +273,8 @@ int main(int argc, char* argv[])
 	 retcode = TH260_SetInputChannelOffset(dev[0],i,0);
 	 if(retcode<0)
 	 {
-			printf("\nTH260_SetInputChannelOffset error %ld. Aborted.\n",retcode);
+			TH260_GetErrorString(Errorstring, retcode);
+			printf("\nTH260_SetInputChannelOffset error %d (%s). Aborted.\n",retcode,Errorstring);
 			goto ex;
 	 }
  }
@@ -263,7 +282,8 @@ int main(int argc, char* argv[])
  retcode = TH260_SetHistoLen(dev[0], MAXLENCODE, &HistLen);
  if(retcode<0)
  {
-        printf("\nTH260_SetHistoLen error %d. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_SetHistoLen error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
  printf("\nHistogram length is %d",HistLen);
@@ -271,26 +291,28 @@ int main(int argc, char* argv[])
  retcode = TH260_SetBinning(dev[0],Binning);
  if(retcode<0)
  {
-        printf("\nTH260_SetBinning error %d. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_SetBinning error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
 
  retcode = TH260_SetOffset(dev[0],Offset);
  if(retcode<0)
  {
-        printf("\nTH260_SetOffset error %d. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_SetOffset error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
  
  retcode = TH260_GetResolution(dev[0], &Resolution);
  if(retcode<0)
  {
-        printf("\nTH260_GetResolution error %d. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_GetResolution error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
 
  printf("\nResolution is %1.0lfps\n", Resolution);
-
 
 
  // After Init allow 150 ms for valid  count rate readings
@@ -301,7 +323,8 @@ int main(int argc, char* argv[])
  retcode = TH260_GetSyncRate(dev[0], &Syncrate);
  if(retcode<0)
  {
-        printf("\nTH260_GetSyncRate error %ld. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_GetSyncRate error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
  printf("\nSyncrate=%1d/s", Syncrate);
@@ -312,7 +335,8 @@ int main(int argc, char* argv[])
 	 retcode = TH260_GetCountRate(dev[0],i,&Countrate);
 	 if(retcode<0)
 	 {
-			printf("\nTH260_GetCountRate error %ld. Aborted.\n",retcode);
+			TH260_GetErrorString(Errorstring, retcode);
+			printf("\nTH260_GetCountRate error %d (%s). Aborted.\n",retcode,Errorstring);
 			goto ex;
 	 }
 	printf("\nCountrate[%1d]=%1d/s", i, Countrate);
@@ -324,7 +348,8 @@ int main(int argc, char* argv[])
  retcode = TH260_GetWarnings(dev[0],&warnings);
  if(retcode<0)
  {
-	printf("\nTH260_GetWarnings error %ld. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+	printf("\nTH260_GetWarnings error %d (%s). Aborted.\n",retcode,Errorstring);
 	goto ex;
  }
  if(warnings)
@@ -337,7 +362,8 @@ int main(int argc, char* argv[])
  retcode = TH260_SetStopOverflow(dev[0],0,10000); //for example only
  if(retcode<0)
  {
-        printf("\nTH260_SetStopOverflow error %ld. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_SetStopOverflow error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
 
@@ -345,7 +371,8 @@ int main(int argc, char* argv[])
  retcode = TH260_SetMeasControl(dev[0], meascontrol , edge1, edge2);
  if(retcode<0)
  {
-        printf("\nTH260_SetMeasControl error %ld. Aborted.\n",retcode);
+        TH260_GetErrorString(Errorstring, retcode);
+        printf("\nTH260_SetMeasControl error %d (%s). Aborted.\n",retcode,Errorstring);
         goto ex;
  }
 
@@ -355,7 +382,8 @@ int main(int argc, char* argv[])
         TH260_ClearHistMem(dev[0]);            
         if(retcode<0)
 		{
-          printf("\nTH260_ClearHistMem error %ld. Aborted.\n",retcode);
+          TH260_GetErrorString(Errorstring, retcode);
+          printf("\nTH260_ClearHistMem error %d (%s). Aborted.\n",retcode,Errorstring);
           goto ex;
 		}
 
@@ -365,20 +393,22 @@ int main(int argc, char* argv[])
         retcode = TH260_GetSyncRate(dev[0], &Syncrate);
         if(retcode<0)
 		{
-          printf("\nTH260_GetSyncRate error %ld. Aborted.\n",retcode);
+          TH260_GetErrorString(Errorstring, retcode);
+          printf("\nTH260_GetSyncRate error %d (%s). Aborted.\n",retcode,Errorstring);
           goto ex;
 		}
-        printf("\nSyncrate=%1d/s", Syncrate);
+        printf("\nSyncrate=%d/s", Syncrate);
 
         for(i=0;i<NumChannels;i++) // for all channels
 		{
 	      retcode = TH260_GetCountRate(dev[0],i,&Countrate);
 	      if(retcode<0)
 		  {
-			printf("\nTH260_GetCountRate error %ld. Aborted.\n",retcode);
+			TH260_GetErrorString(Errorstring, retcode);
+			printf("\nTH260_GetCountRate error %d (%s). Aborted.\n",retcode,Errorstring);
 			goto ex;
 		  }
-	      printf("\nCountrate[%1d]=%1d/s", i, Countrate);
+	      printf("\nCountrate[%d]=%d/s", i, Countrate);
 		}
 
 		//here you could check for warnings again
@@ -386,7 +416,8 @@ int main(int argc, char* argv[])
         retcode = TH260_StartMeas(dev[0],Tacq); 
         if(retcode<0)
         {
-                printf("\nTH260_StartMeas error %ld. Aborted.\n",retcode);
+                TH260_GetErrorString(Errorstring, retcode);
+                printf("\nTH260_StartMeas error %d (%s). Aborted.\n",retcode,Errorstring);
                 goto ex;
         }
          
@@ -399,7 +430,8 @@ int main(int argc, char* argv[])
 			  retcode = TH260_CTCStatus(dev[0], &ctcstatus);
 			  if(retcode<0)
 			  {
-					printf("\nTH260_CTCStatus error %ld. Aborted.\n",retcode);
+					TH260_GetErrorString(Errorstring, retcode);
+					printf("\nTH260_CTCStatus error %d (%s). Aborted.\n",retcode,Errorstring);
 					goto ex;
 			  }
 			}
@@ -417,18 +449,20 @@ int main(int argc, char* argv[])
 		ctcstatus=0;
 		while(ctcstatus==0)
 		{
-		  retcode = TH260_CTCStatus(dev[0], &ctcstatus);
-          if(retcode<0)
-		  {
-                printf("\nTH260_CTCStatus error %ld. Aborted.\n",retcode);
-                goto ex;
-		  }
+			retcode = TH260_CTCStatus(dev[0], &ctcstatus);
+			if(retcode<0)
+			{
+				TH260_GetErrorString(Errorstring, retcode);
+				printf("\nTH260_CTCStatus error %d (%s). Aborted.\n",retcode,Errorstring);
+				goto ex;
+			}
 		}
 
 		retcode = TH260_GetElapsedMeasTime(dev[0], &elapsed);
         if(retcode<0)
         {
-                printf("\nTH260_GetElapsedMeasTime error %1d. Aborted.\n",retcode);
+				TH260_GetErrorString(Errorstring, retcode);
+				printf("\nTH260_GetElapsedMeasTime error %d (%s). Aborted.\n",retcode,Errorstring);
                 goto ex;
         }
 		printf("\n  Elapsed measurement time was %1.0lf ms", elapsed);
@@ -436,10 +470,10 @@ int main(int argc, char* argv[])
         retcode = TH260_StopMeas(dev[0]);
         if(retcode<0)
         {
-                printf("\nTH260_GetElapsedMeasTime error %1d. Aborted.\n",retcode);
+                TH260_GetErrorString(Errorstring, retcode);
+                printf("\nTH260_StopMeas error %d (%s). Aborted.\n",retcode,Errorstring);
                 goto ex;
         }
-
         
 		printf("\n");
 		for(i=0;i<NumChannels;i++) // for all channels
@@ -447,7 +481,8 @@ int main(int argc, char* argv[])
           retcode = TH260_GetHistogram(dev[0],counts[i],i,0);
           if(retcode<0)
 		  {
-                printf("\nTH260_GetHistogram error %1d. Aborted.\n",retcode);
+                TH260_GetErrorString(Errorstring, retcode);
+                printf("\nTH260_GetHistogram error %d (%s). Aborted.\n",retcode,Errorstring);
                 goto ex;
 		  }
 
@@ -463,7 +498,8 @@ int main(int argc, char* argv[])
         retcode = TH260_GetFlags(dev[0], &flags);
         if(retcode<0)
         {
-                printf("\nTH260_GetFlags error %1d. Aborted.\n",retcode);
+                TH260_GetErrorString(Errorstring, retcode);
+                printf("\nTH260_GetFlags error %d (%s). Aborted.\n",retcode,Errorstring);
                 goto ex;
         }
         

@@ -1,26 +1,27 @@
 /************************************************************************
 
-  Demo for running multiple TimeHarp 260 in TTTR mode via TH260LIB v.3.1
+  Demo for running multiple TimeHarp 260 in TTTR mode via TH260LIB v.3.2
   The program performs a measurement based on hardcoded settings.
   The resulting event data is stored in multiple binary output files.
 
-  Michael Wahl, PicoQuant GmbH, March 2017
+  Michael Wahl, PicoQuant GmbH, February 2020
 
-  Note: This is a console application (i.e. run in Windows cmd box)
+  Note: This is a console application
 
   Note: At the API level the input channel numbers are indexed 0..N-1 
-		where N is the number of input channels the device has.
+        where N is the number of input channels the device has.
 
-  Note: This demo writes only raw event data to the output files.
-		It does not write a file header as regular .ht* files have it. 
+  Note: This demo writes only raw event data to the output file.
+        It does not write a file header as regular .PTU files have it. 
 
 
   Tested with the following compilers:
 
   - MinGW 2.0.0-3 (free compiler for Win 32 bit)
   - MS Visual C++ 6.0 (Win 32 bit)
-  - MS Visual Studio 2010 (Win 64 bit)
+  - MS Visual Studio 2010 (Win 32/64 bit)
   - Borland C++ 5.3 (Win 32 bit)
+  - gcc 4.8.1 (Linux 32/64 bit)  
 
 ************************************************************************/
 
@@ -95,8 +96,9 @@ int main(int argc, char* argv[])
  int done[NCARDS];
  int alldone;
 
- printf("\nTimeHarp 260 TH260Lib.DLL Demo Application   M. Wahl, PicoQuant GmbH, 2017");
+ printf("\nTimeHarp 260 TH260Lib.DLL Demo Application   M. Wahl, PicoQuant GmbH, 2020");
  printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
  TH260_GetLibraryVersion(LIB_Version);
  printf("\nLibrary version is %s\n",LIB_Version);
  if(strncmp(LIB_Version,LIB_VERSION,sizeof(LIB_VERSION))!=0)
@@ -386,7 +388,10 @@ int main(int argc, char* argv[])
 			}               
 				Progress += nRecords;
 				if(n==NCARDS-1)
+				{
 					printf("\b\b\b\b\b\b\b\b\b\b\b\b%12u",Progress);
+					fflush(stdout);
+				}
 		}
 		else
 		{

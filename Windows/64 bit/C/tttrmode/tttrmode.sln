@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tttrmode", "tttrmode.vcxproj", "{433FE3A7-BE16-FE83-03AA-9ABA6E814C88}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tttrmode", "tttrmode.vcxproj", "{BBC4B67D-33FF-DA85-D992-4EFC2565A425}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{433FE3A7-BE16-FE83-03AA-9ABA6E814C88}.Debug|Win32.ActiveCfg = Debug|Win32
-		{433FE3A7-BE16-FE83-03AA-9ABA6E814C88}.Debug|Win32.Build.0 = Debug|Win32
-		{433FE3A7-BE16-FE83-03AA-9ABA6E814C88}.Debug|x64.ActiveCfg = Debug|x64
-		{433FE3A7-BE16-FE83-03AA-9ABA6E814C88}.Debug|x64.Build.0 = Debug|x64
-		{433FE3A7-BE16-FE83-03AA-9ABA6E814C88}.Release|Win32.ActiveCfg = Release|Win32
-		{433FE3A7-BE16-FE83-03AA-9ABA6E814C88}.Release|Win32.Build.0 = Release|Win32
-		{433FE3A7-BE16-FE83-03AA-9ABA6E814C88}.Release|x64.ActiveCfg = Release|x64
-		{433FE3A7-BE16-FE83-03AA-9ABA6E814C88}.Release|x64.Build.0 = Release|x64
+		{BBC4B67D-33FF-DA85-D992-4EFC2565A425}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BBC4B67D-33FF-DA85-D992-4EFC2565A425}.Debug|Win32.Build.0 = Debug|Win32
+		{BBC4B67D-33FF-DA85-D992-4EFC2565A425}.Debug|x64.ActiveCfg = Debug|x64
+		{BBC4B67D-33FF-DA85-D992-4EFC2565A425}.Debug|x64.Build.0 = Debug|x64
+		{BBC4B67D-33FF-DA85-D992-4EFC2565A425}.Release|Win32.ActiveCfg = Release|Win32
+		{BBC4B67D-33FF-DA85-D992-4EFC2565A425}.Release|Win32.Build.0 = Release|Win32
+		{BBC4B67D-33FF-DA85-D992-4EFC2565A425}.Release|x64.ActiveCfg = Release|x64
+		{BBC4B67D-33FF-DA85-D992-4EFC2565A425}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
